@@ -78,10 +78,17 @@ public class ListFragment extends Fragment {
 				contact.getID()
 			);
 			FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-			fragmentManager.beginTransaction()
-				.replace(R.id.fragment_container, detailFragment)
-				.addToBackStack("contacts")
-				.commit();
+			if (view.findViewById(R.id.fragmentTablet) != null) {
+				fragmentManager.beginTransaction()
+						.replace(R.id.fragmentTablet, detailFragment)
+						.addToBackStack("contacts")
+						.commit();
+			} else {
+				fragmentManager.beginTransaction()
+						.replace(R.id.fragment_container, detailFragment)
+						.addToBackStack("contacts")
+						.commit();
+			}
 		};
 		CustomAdapter adapter = new CustomAdapter(contactsList, requireActivity(), onContactClickListener);
 		recyclerView.setAdapter(adapter);
