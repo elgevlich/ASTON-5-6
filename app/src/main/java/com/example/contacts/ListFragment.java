@@ -12,51 +12,81 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ListFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private ArrayList<Contact> contactsList = new ArrayList<>();
-    private CustomAdapter adapter;
-    private Boolean isReset = false;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
-    }
+	Map<String, Contact> map = new HashMap<>();
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (!isReset) {
-            listContacts();
-            isReset = true;
-        }
-        recyclerView = view.findViewById(R.id.contacts_list);
-        CustomAdapter.OnContactClickListener onContactClickListener = (contact, position) -> {
-            DetailsFragment detailFragment = DetailsFragment.newInstance(
-                    contact.getName(),
-                    contact.getLastName(),
-                    contact.getNumber()
-            );
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, detailFragment)
-                    .addToBackStack("contacts")
-                    .commit();
-        };
-        adapter = new CustomAdapter(contactsList, requireActivity(), onContactClickListener);
-        recyclerView.setAdapter(adapter);
-    }
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-    private void listContacts() {
-        contactsList.add(new Contact("Pieter", "Parker", "+1 234 567 88 99"));
-        contactsList.add(new Contact("Harry", "Potter", "+6 666 666 66 66"));
-        contactsList.add(new Contact("Angelina", "Jolie", "+7 981 203 56 77"));
-        contactsList.add(new Contact("Hermione", "Granger", "+5 555 555 55 55"));
-    }
+		map.put("1", new Contact("Pieter", "Parker", "+1 234 567 88 99", "1"));
+		map.put("2", new Contact("Harry", "Potter", "+6 666 666 66 66", "2"));
+		map.put("3", new Contact("Peppa", "Pig", "+7 914 205 00 33", "3"));
+		map.put("4", new Contact("Hermione", "Granger", "+5 555 555 55 55", "4"));
+
+		getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
+			ArrayList<String> result = bundle.getStringArrayList("bundleKey");
+			String id = result.get(3);
+			map.get(id).setName(result.get(0));
+			map.get(id).setLastName(result.get(1));
+			map.get(id).setNumber(result.get(2));
+		});
+	}
+
+	@Override
+	public void onSaveInstanceState(@NonNull Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable("list", (Serializable)map);
+	}
+
+	@Override public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+		super.onViewStateRestored(savedInstanceState);
+		if (savedInstanceState != null) {
+			map = (Map<String, Contact>)savedInstanceState.getSerializable("list");
+		}
+	}
+
+	@Override
+	public View onCreateView(
+		LayoutInflater inflater, ViewGroup container,
+		Bundle savedInstanceState
+	) {
+		return inflater.inflate(R.layout.fragment_list, container, false);
+	}
+
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		ArrayList<Contact> contactsList = new ArrayList<>(map.values());
+		recyclerViewInit(view, contactsList);
+	}
+
+	private void recyclerViewInit(View view, ArrayList<Contact> contactsList) {
+		RecyclerView recyclerView = view.findViewById(R.id.contacts_list);
+		CustomAdapter.OnContactClickListener onContactClickListener = (contact, position) -> {
+			DetailsFragment detailFragment = DetailsFragment.newInstance(
+				contact.getName(),
+				contact.getLastName(),
+				contact.getNumber(),
+				contact.getID()
+			);
+			FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+			fragmentManager.beginTransaction()
+				.replace(R.id.fragment_container, detailFragment)
+				.addToBackStack("contacts")
+				.commit();
+		};
+		CustomAdapter adapter = new CustomAdapter(contactsList, requireActivity(), onContactClickListener);
+		recyclerView.setAdapter(adapter);
+	}
+
 }
 
 

@@ -9,17 +9,18 @@ import android.os.Bundle;
 
 public class MainActivity extends FragmentActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        showDetails(new ListFragment());
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		showDetails(new ListFragment());
+	}
 
-    void showDetails(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, fragment)
-                .commit();
-    }
+	void showDetails(Fragment fragment) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction()
+			.add(R.id.fragment_container, fragment)
+			.commit();
+	}
+
 }

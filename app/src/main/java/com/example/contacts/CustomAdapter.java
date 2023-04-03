@@ -7,60 +7,64 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder> {
 
-    public interface OnContactClickListener {
-        void onContactClick(Contact contact, int position);
-    }
+	public interface OnContactClickListener {
 
-    private final List<Contact> contactsList;
-    private LayoutInflater inflater;
-    private final OnContactClickListener onContactClickListener;
+		void onContactClick(Contact contact, int position);
 
-    public CustomAdapter(List<Contact> listContacts, Context context, OnContactClickListener onContactClickListener) {
-        this.contactsList = listContacts;
-        this.inflater = LayoutInflater.from(context);
-        this.onContactClickListener = onContactClickListener;
-    }
+	}
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        // Create a new view, which defines the UI of the list item
-        View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_contact, viewGroup, false);
-        return new ViewHolder(view);
-    }
+	private final List<Contact> contactsList;
+	private final LayoutInflater inflater;
+	private final OnContactClickListener onContactClickListener;
 
-    @Override
-    public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
-        final Contact contact = contactsList.get(position);
-        viewHolder.name.setText(contact.getName());
-        viewHolder.lastname.setText(contact.getLastName());
-        viewHolder.number.setText(contact.getNumber());
-        viewHolder.itemView.getRootView()
-                .setOnClickListener(view -> onContactClickListener.onContactClick(contact, position));
-    }
+	public CustomAdapter(List<Contact> listContacts, Context context, OnContactClickListener onContactClickListener) {
+		this.contactsList = listContacts;
+		this.inflater = LayoutInflater.from(context);
+		this.onContactClickListener = onContactClickListener;
+	}
 
-    @Override
-    public int getItemCount() {
-        return contactsList.size();
-    }
+	@NonNull @Override
+	public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+		View view = LayoutInflater.from(viewGroup.getContext())
+			.inflate(R.layout.item_contact, viewGroup, false);
+		return new ViewHolder(view);
+	}
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView name;
-        private final TextView lastname;
-        private final TextView number;
+	@Override
+	public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
+		final Contact contact = contactsList.get(position);
+		viewHolder.name.setText(contact.getName());
+		viewHolder.lastname.setText(contact.getLastName());
+		viewHolder.number.setText(contact.getNumber());
+		viewHolder.itemView.getRootView()
+			.setOnClickListener(view -> onContactClickListener.onContactClick(contact, position));
+	}
 
-        public ViewHolder(View view) {
-            super(view);
-            name = (TextView) view.findViewById(R.id.name);
-            lastname = (TextView) view.findViewById(R.id.lastname);
-            number = (TextView) view.findViewById(R.id.number);
-        }
+	@Override
+	public int getItemCount() {
+		return contactsList.size();
+	}
 
-    }
+	public static class ViewHolder extends RecyclerView.ViewHolder {
+
+		private final TextView name;
+		private final TextView lastname;
+		private final TextView number;
+
+		public ViewHolder(View view) {
+			super(view);
+			name = view.findViewById(R.id.name);
+			lastname = view.findViewById(R.id.lastname);
+			number = view.findViewById(R.id.number);
+		}
+
+	}
+
 }
