@@ -87,7 +87,6 @@ public class DetailsFragment extends Fragment {
 			result.putStringArrayList("bundleKey", contactInfo);
 			getParentFragmentManager().setFragmentResult("requestKey", result);
 			getParentFragmentManager().popBackStack();
-
 		});
 	}
 

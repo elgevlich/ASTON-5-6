@@ -30,14 +30,6 @@ public class ListFragment extends Fragment {
 		map.put("2", new Contact("Harry", "Potter", "+6 666 666 66 66", "2"));
 		map.put("3", new Contact("Peppa", "Pig", "+7 914 205 00 33", "3"));
 		map.put("4", new Contact("Hermione", "Granger", "+5 555 555 55 55", "4"));
-
-		getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
-			ArrayList<String> result = bundle.getStringArrayList("bundleKey");
-			String id = result.get(3);
-			map.get(id).setName(result.get(0));
-			map.get(id).setLastName(result.get(1));
-			map.get(id).setNumber(result.get(2));
-		});
 	}
 
 	@Override
@@ -65,6 +57,15 @@ public class ListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ArrayList<Contact> contactsList = new ArrayList<>(map.values());
+
+		getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
+			ArrayList<String> result = bundle.getStringArrayList("bundleKey");
+			String id = result.get(3);
+			map.get(id).setName(result.get(0));
+			map.get(id).setLastName(result.get(1));
+			map.get(id).setNumber(result.get(2));
+			recyclerViewInit(view, contactsList);
+		});
 		recyclerViewInit(view, contactsList);
 	}
 
@@ -80,14 +81,14 @@ public class ListFragment extends Fragment {
 			FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 			if (view.findViewById(R.id.fragmentTablet) != null) {
 				fragmentManager.beginTransaction()
-						.replace(R.id.fragmentTablet, detailFragment)
-						.addToBackStack("contacts")
-						.commit();
+					.replace(R.id.framelayout_right, detailFragment)
+					.addToBackStack("contacts")
+					.commit();
 			} else {
 				fragmentManager.beginTransaction()
-						.replace(R.id.fragment_container, detailFragment)
-						.addToBackStack("contacts")
-						.commit();
+					.replace(R.id.framelayout_left, detailFragment)
+					.addToBackStack("contacts")
+					.commit();
 			}
 		};
 		CustomAdapter adapter = new CustomAdapter(contactsList, requireActivity(), onContactClickListener);

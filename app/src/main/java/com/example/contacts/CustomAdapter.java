@@ -20,7 +20,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
 	}
 
-	private final List<Contact> contactsList;
+	private List<Contact> contactsList;
 	private final LayoutInflater inflater;
 	private final OnContactClickListener onContactClickListener;
 
@@ -50,6 +50,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 	@Override
 	public int getItemCount() {
 		return contactsList.size();
+	}
+
+	@SuppressLint("NotifyDataSetChanged")
+	public void setContacts(List<Contact> contactsList) {
+		this.contactsList = contactsList;
+		notifyDataSetChanged();
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
