@@ -5,10 +5,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ContactAdapter(
 	private var contactsList: List<Contact>,
@@ -22,7 +26,9 @@ class ContactAdapter(
 		fun onContactClick(contact: Contact?, position: Int)
 	}
 
+
 	private val onContactClickListener: OnContactClickListener
+
 
 	init {
 		this.onContactClickListener = onContactClickListener
@@ -55,6 +61,11 @@ class ContactAdapter(
 		return contactsList.size
 	}
 
+	fun setFilteredList(contactsList: List<Contact>){
+		this.contactsList = contactsList
+		notifyDataSetChanged()
+	}
+
 
 	class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -72,4 +83,5 @@ class ContactAdapter(
 			id = view.findViewById(R.id.id_number)
 		}
 	}
+
 }

@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:orientation="vertical"
 	>
 
-	<LinearLayout
+	<com.google.android.material.card.MaterialCardView
+		android:id="@+id/materialCardView"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
+		android:layout_margin="@dimen/space_small"
+		app:cardCornerRadius="@dimen/space_small_2x"
+		app:cardElevation="@dimen/space_small"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		>
+
+		<androidx.appcompat.widget.SearchView
+			android:id="@+id/contact_search"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#968D9F"
+			android:textCursorDrawable="@null"
+			app:iconifiedByDefault="false"
+			app:queryBackground="@null"
+			app:queryHint="@string/search_hint"
+			/>
+
+	</com.google.android.material.card.MaterialCardView>
+
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent" android:layout_height="wrap_content"
 		>
 
 		<androidx.recyclerview.widget.RecyclerView
@@ -26,6 +50,6 @@
 			tools:listitem="@layout/item_contact"
 			/>
 
-	</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

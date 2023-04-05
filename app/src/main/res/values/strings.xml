@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">Contacts</string>
-    <string name="name_hint">Name:</string>
-    <string name="lastname_hint">Lastname:</string>
-    <string name="number_hint">Number:</string>
-    <string name="save_button">Save</string>
+	<string name="app_name">Contacts</string>
+	<string name="name_hint">Name:</string>
+	<string name="lastname_hint">Lastname:</string>
+	<string name="number_hint">Number:</string>
+	<string name="save_button">Save</string>
+	<string name="search_hint">Search here...</string>
 </resources>
