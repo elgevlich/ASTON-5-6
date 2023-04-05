@@ -6,6 +6,37 @@
 	android:padding="@dimen/space_small_x"
 	>
 
+	<TextView
+		android:id="@+id/id_number"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_margin="@dimen/space_small"
+		android:layout_marginEnd="@dimen/space_small_2x"
+		android:text="ID"
+		android:textColor="@color/purple_200"
+		android:textSize="@dimen/font_size_medium"
+		android:textStyle="bold"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		/>
+
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/image_contact"
+		android:layout_width="@dimen/space_large_3x"
+		android:layout_height="@dimen/space_large_3x"
+		android:padding="5dp"
+		android:scaleType="centerCrop"
+		android:src="@drawable/ic_baseline_face_24"
+		app:layout_constraintBottom_toTopOf="@id/til_name"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+		app:strokeColor="#968D9F"
+		app:strokeWidth="@dimen/space_small_3x"
+		/>
+
 	<com.google.android.material.textfield.TextInputLayout
 		android:id="@+id/til_name"
 		android:layout_width="0dp"

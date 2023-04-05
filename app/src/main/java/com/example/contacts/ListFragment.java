@@ -14,22 +14,30 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class ListFragment extends Fragment {
 
 	Map<String, Contact> map = new HashMap<>();
 
+
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		map.put("1", new Contact("Pieter", "Parker", "+1 234 567 88 99", "1"));
-		map.put("2", new Contact("Harry", "Potter", "+6 666 666 66 66", "2"));
-		map.put("3", new Contact("Peppa", "Pig", "+7 914 205 00 33", "3"));
-		map.put("4", new Contact("Hermione", "Granger", "+5 555 555 55 55", "4"));
+		for (int i = 1; i < 110; i++) {
+			String url = "https://picsum.photos/id/" + i + "/1200/900";
+			String name = "Name" + i;
+			String lastname = "Lastname" + i;
+			String number = "+7 914 206 73 0" + i;
+			map.put(
+				String.valueOf(i),
+				new Contact(name, lastname, number, String.valueOf(i), url)
+			);
+		}
 	}
 
 	@Override
@@ -57,12 +65,13 @@ public class ListFragment extends Fragment {
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ArrayList<Contact> contactsList = new ArrayList<>(map.values());
+		Collections.sort(contactsList);
 
 		getParentFragmentManager().setFragmentResultListener("requestKey", this, (requestKey, bundle) -> {
 			ArrayList<String> result = bundle.getStringArrayList("bundleKey");
 			String id = result.get(3);
 			map.get(id).setName(result.get(0));
-			map.get(id).setLastName(result.get(1));
+			map.get(id).setLastname(result.get(1));
 			map.get(id).setNumber(result.get(2));
 			recyclerViewInit(view, contactsList);
 		});
@@ -71,12 +80,13 @@ public class ListFragment extends Fragment {
 
 	private void recyclerViewInit(View view, ArrayList<Contact> contactsList) {
 		RecyclerView recyclerView = view.findViewById(R.id.contacts_list);
-		CustomAdapter.OnContactClickListener onContactClickListener = (contact, position) -> {
+		ContactAdapter.OnContactClickListener onContactClickListener = (contact, position) -> {
 			DetailsFragment detailFragment = DetailsFragment.newInstance(
 				contact.getName(),
-				contact.getLastName(),
+				contact.getLastname(),
 				contact.getNumber(),
-				contact.getID()
+				contact.getId(),
+				contact.getPicture()
 			);
 			FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 			if (view.findViewById(R.id.fragmentTablet) != null) {
@@ -91,9 +101,10 @@ public class ListFragment extends Fragment {
 					.commit();
 			}
 		};
-		CustomAdapter adapter = new CustomAdapter(contactsList, requireActivity(), onContactClickListener);
+		ContactAdapter adapter = new ContactAdapter(contactsList, requireActivity(), onContactClickListener);
 		recyclerView.setAdapter(adapter);
 	}
+
 
 }
 

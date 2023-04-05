@@ -1,52 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/space_small_x"
-    android:layout_marginTop="@dimen/space_small_2x"
-    android:layout_marginEnd="@dimen/space_small_x"
-    app:cardCornerRadius="@dimen/space_small_2x"
-    app:cardElevation="@dimen/space_small_2x"
-    app:cardUseCompatPadding="true">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_marginStart="@dimen/space_small_x"
+	android:layout_marginTop="@dimen/space_small_2x"
+	android:layout_marginEnd="@dimen/space_small_x"
+	app:cardCornerRadius="@dimen/space_small_2x"
+	app:cardElevation="@dimen/space_small_2x"
+	app:cardUseCompatPadding="true"
+	>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_200"
-        android:orientation="horizontal"
-        android:padding="@dimen/space_small">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/purple_200"
+		android:orientation="horizontal"
+		android:padding="@dimen/space_small"
+		>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/space_small_3x"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
-            tools:text="Name" />
+		<TextView
+			android:id="@+id/id_number"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_marginEnd="@dimen/space_small_2x"
+			android:textColor="@color/purple_500"
+			android:textSize="@dimen/font_size_medium"
+			android:textStyle="bold"
+			tools:text="ID"
+			/>
 
-        <TextView
-            android:id="@+id/lastname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
-            tools:text="Lastname" />
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:background="@color/purple_200"
+			android:orientation="vertical"
+			android:padding="@dimen/space_small"
+			>
+			<TextView
+				android:id="@+id/name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="@dimen/space_small_2x"
+				android:textColor="@color/white"
+				android:textSize="@dimen/font_size_small"
+				android:textStyle="bold"
+				tools:text="Name"
+				/>
 
-        <TextView
-            android:id="@+id/number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_small"
-            android:textStyle="bold"
-            tools:text="+7 999 999 99 99" />
+			<TextView
+				android:id="@+id/lastname"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/white"
+				android:textSize="@dimen/font_size_small"
+				android:textStyle="bold"
+				tools:text="Lastname"
 
-    </LinearLayout>
+				/>
+
+			<TextView
+				android:id="@+id/number"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="end"
+				android:textColor="@color/white"
+				android:textSize="@dimen/font_size_small"
+				android:textStyle="bold"
+				tools:text="+7 999 999 99 99"
+				/>
+
+		</LinearLayout>
+
+		<com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/image_contact"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:scaleType="centerCrop"
+			android:src="@drawable/ic_baseline_face_24"
+			app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+			app:strokeColor="#968D9F"
+			app:strokeWidth="@dimen/space_small_3x"
+			/>
+
+	</LinearLayout>
+
 </androidx.cardview.widget.CardView>
